@@ -1,45 +1,45 @@
-(* —L—”ƒ‚ƒWƒ…[ƒ‹‚ğƒCƒ“ƒ|[ƒg *)
+(* æœ‰ç†æ•°ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’ã‚¤ãƒ³ãƒãƒ¼ãƒˆ *)
 Require Import QArith.
-(* ƒŠƒXƒgƒ‚ƒWƒ…[ƒ‹‚ğƒCƒ“ƒ|[ƒg *)
+(* ãƒªã‚¹ãƒˆãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’ã‚¤ãƒ³ãƒãƒ¼ãƒˆ *)
 Require Import List.
-(* ƒfƒtƒHƒ‹ƒg‚Ì‰‰Zq‚ğ—L—”‚Ì‚à‚Ì‚Æ‚·‚é *)
+(* ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®æ¼”ç®—å­ã‚’æœ‰ç†æ•°ã®ã‚‚ã®ã¨ã™ã‚‹ *)
 Open Scope Q_scope.
 
-(* sumŠÖ”‚Ì’è‹` *)
+(* sumé–¢æ•°ã®å®šç¾© *)
 Fixpoint sum (xs : list Q) : Q :=
   match xs with
     | nil => 0
     | x :: xs => x + sum xs
   end.
 
-(* sumŠÖ”‚ÌƒeƒXƒg *)
-(* 1‚©‚ç10‚Ü‚Å‚Ì—v‘f‚ğ‚ÂƒŠƒXƒg‚ğ—^‚¦‚é‚Æ55‚ğ•Ô‚· *)
+(* sumé–¢æ•°ã®ãƒ†ã‚¹ãƒˆ *)
+(* 1ã‹ã‚‰10ã¾ã§ã®è¦ç´ ã‚’æŒã¤ãƒªã‚¹ãƒˆã‚’ä¸ãˆã‚‹ã¨55ã‚’è¿”ã™ *)
 Theorem sum_1_2__10_returns_55 :
   sum (1#1::2#1::3#1::4#1::5#1::6#1::7#1::8#1::9#1::10#1::nil) = 55#1.
 Proof.
-  compute. (* ŒvZ‚·‚é *)
-  reflexivity. (* ¶•Ó = ‰E•Ó *)
+  compute. (* è¨ˆç®—ã™ã‚‹ *)
+  reflexivity. (* å·¦è¾º = å³è¾º *)
 Qed.
 
-(* sumŠÖ”‚Ì«¿ *)
-(* sum(ƒŠƒXƒg) = ƒŠƒXƒg‚Ìæ“ª—v‘f(nil‚Ìê‡‚Í0) + sum(ƒŠƒXƒg‚Ìæ“ª—v‘f‚ğœ‚¢‚½ƒŠƒXƒg(nil‚Ìê‡‚Ínil)) *)
+(* sumé–¢æ•°ã®æ€§è³ª *)
+(* sum(ãƒªã‚¹ãƒˆ) = ãƒªã‚¹ãƒˆã®å…ˆé ­è¦ç´ (nilã®å ´åˆã¯0) + sum(ãƒªã‚¹ãƒˆã®å…ˆé ­è¦ç´ ã‚’é™¤ã„ãŸãƒªã‚¹ãƒˆ(nilã®å ´åˆã¯nil)) *)
 Theorem sum_head : forall (xs : list Q),
   sum xs = (hd (0#1) xs) + sum (tail xs).
 Proof.
-  intros. (* xs‚ğ“±“ü *)
-  induction xs. (* xs‚É‚Â‚¢‚Ä‚Ì‹A”[–@‚ğŠJn *)
+  intros. (* xsã‚’å°å…¥ *)
+  induction xs. (* xsã«ã¤ã„ã¦ã®å¸°ç´æ³•ã‚’é–‹å§‹ *)
     (* sum nil = hd 0 nil + sum (tail nil) *)
-    simpl. (* sum, hd, tail ŠÖ”‚ğ“WŠJ *)
+    simpl. (* sum, hd, tail é–¢æ•°ã‚’å±•é–‹ *)
     (* 0 + 0 = 0 *)
-    unfold Qplus. (* ‰ÁZ‚ğ“WŠJ *)
-    (* (È—ª) *)
-    simpl. (* “WŠJ‚³‚ê‚½‰ÁZ‚ğŒvZ *)
+    unfold Qplus. (* åŠ ç®—ã‚’å±•é–‹ *)
+    (* (çœç•¥) *)
+    simpl. (* å±•é–‹ã•ã‚ŒãŸåŠ ç®—ã‚’è¨ˆç®— *)
     (* 0 = 0 *)
-    reflexivity. (* ¶•Ó = ‰E•Ó *)
+    reflexivity. (* å·¦è¾º = å³è¾º *)
     
     (* sum (a::xs) = hd 0 (a::xs) + sum (tail (a::xs)) *)
-    simpl. (* sum, hd, tail ŠÖ”‚ğ“WŠJ *)
+    simpl. (* sum, hd, tail é–¢æ•°ã‚’å±•é–‹ *)
     (* a + sum xs = a + sum xs *)
-    reflexivity. (* ¶•Ó = ‰E•Ó *)
+    reflexivity. (* å·¦è¾º = å³è¾º *)
 Qed.
 
