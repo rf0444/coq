@@ -4,6 +4,7 @@ Proof.
 Qed.
 
 Theorem and_2 : forall P Q:Prop, P /\ Q -> P -> Q.
+Proof.
   intros P Q H _; elim H.
   intros _ q; assumption.
 Qed.
@@ -14,6 +15,88 @@ Proof.
   contradiction.
 Qed.
 
+Theorem nn_2 : forall A:Prop, ~A <-> ~~~A.
+Proof.
+  intro P.
+  split.
+    intros na nna; contradiction.
+    intros nnna a.
+    apply nnna.
+    intro na; contradiction.
+Qed.
+
+Theorem n_1 : forall A:Prop, ~ A <-> (A -> False).
+Proof.
+  intro A.
+  split.
+    intros na a; contradiction.
+    intros H a; exact (H a).
+Qed.
+
+Theorem cp_1 : forall A B:Prop, (A -> B) -> (~B -> ~A).
+Proof.
+  intros A B H nb a.
+  assert (b := H a); contradiction.
+Qed.
+
+Theorem cp_2 : forall A B:Prop, (~B -> ~A) <-> (A -> ~~B).
+Proof.
+  intros A B.
+  split; intro H.
+    intros a nb.
+    assert (na := H nb); contradiction.
+    intros nb a.
+    assert (nbb := H a); contradiction.
+Qed.
+
+Theorem dist_1 : forall A B C:Prop, A /\ (B \/ C) <-> (A /\ B) \/ (A /\ C).
+Proof.
+  intros A B C.
+  split; intro H.
+    elim H; intros a H1.
+    elim H1; [intro b | intro c].
+      left; split; assumption.
+      right; split; assumption.
+    elim H; intro H1.
+      elim H1; intros a b.
+      split; [ | left]; assumption.
+      elim H1; intros a c.
+      split; [ | right]; assumption.
+Qed.
+
+Theorem dist_2 : forall A B C:Prop, A \/ (B /\ C) <-> (A \/ B) /\ (A \/ C).
+Proof.
+  intros A B C.
+  split; intro H.
+    elim H; [intro a | intro H1].
+      split; left; assumption.
+      elim H1; intros b c.
+      split; right; assumption.
+    elim H; intros H1 H2.
+      elim H1; [intro a | intro b].
+        left; assumption.
+        elim H2; [intro a | intro c].
+          left; assumption.
+          right; split; assumption.
+Qed.
+
+Theorem dm_1 : forall A B:Prop, (~A \/ ~B) -> ~(A /\ B).
+Proof.
+  intros A B H.
+  intro H1.
+  elim H; [intro na | intro nb].
+    elim H1; intros a b; contradiction.
+    elim H1; intros a b; contradiction.
+Qed.
+
+Theorem dm_2 : forall A B:Prop, (~A /\ ~B) -> ~(A \/ B).
+Proof.
+  intros A B H H1.
+  elim H; intros na nb.
+  elim H1; intros; contradiction.
+Qed.
+
+ 
 Theorem existn_nforall_1 :
   forall (A:Type)(P:A -> Prop),
   (exists a:A, ~ P a) -> (~ forall a:A, P a).
