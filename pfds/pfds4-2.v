@@ -89,8 +89,7 @@ Proof.
     replace mink with 2; [|auto].
     omega.
     
-    rewrite <- mult_assoc.
-    rewrite <- mult_assoc.
+    repeat rewrite <- mult_assoc.
     apply mult_le_compat_l.
     apply mult_le_compat; apply lt_le_weak; auto.
 Qed.
