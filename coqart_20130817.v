@@ -157,37 +157,40 @@ Proof.
   induction xs.
     intro ys.
     simpl.
-    auto.
+    reflexivity.
     
     intro ys.
     simpl.
     rewrite IHxs.
-    auto.
+    reflexivity.
 Qed.
 
 Lemma rev2_app: forall (A: Type)(xs ys: list A),
   append (rev2 xs nil) ys = rev2 xs ys.
 Proof.
-induction xs.
-  auto.
-  
-  intro ys.
-  simpl.
-  rewrite <- (IHxs (a::ys)).
-  rewrite <- (IHxs (a::nil)).
-  rewrite <- app_r_head.
-  auto.
+  induction xs.
+    simpl.
+    intro ys.
+    reflexivity.
+    
+    intro ys.
+    simpl.
+    rewrite <- (IHxs (a::ys)).
+    rewrite <- (IHxs (a::nil)).
+    rewrite <- app_r_head.
+    reflexivity.
 Qed.
 
 Theorem rev_eq_rev2: forall (A: Type)(xs: list A),
   reverse xs = rev2 xs nil.
 Proof.
-intro A.
-induction xs.
-  auto.
-  
-  simpl.
-  erewrite IHxs.
-  rewrite rev2_app.
-  auto.
+  intro A.
+  induction xs.
+    simpl.
+    reflexivity.
+    
+    simpl.
+    erewrite IHxs.
+    rewrite rev2_app.
+    reflexivity.
 Qed.
